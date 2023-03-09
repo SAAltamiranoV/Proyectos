@@ -1,0 +1,42 @@
+#Importamos la librería "pandas" que nos permite trabajar con bases de datos y "matplotlib.pyplot" que nos permite
+#visualizar los datos en forma de gráficos
+import pandas as pd
+import matplotlib.pyplot as plt
+
+#Cargar la base de datos de nuestro archivo .csv, usamos el parámetro "delimiter=';'" para indicarle a Pycharm que
+#nuestro archivo csv está separado por ";" y el parámetro "header=0" para indicarle que la primera fila de nuestro
+#archivo es de títulos
+PreciosPetroleo = pd.read_csv('PrecioAnual.csv',delimiter=';',header=0)
+print(PreciosPetroleo)
+
+#El comando "fig, ax" se usa para crear y manipular gráficos, "fig" representa la ventana en la que se dibujan
+#los gráficos y "ax" representa los ejes de coordenadas
+fig, ax=plt.subplots()
+
+#Establecemos los ejes del gráfico
+EjeX=PreciosPetroleo['Anio']
+EjeY=PreciosPetroleo['PrecioWTI']
+
+#En la variable "CentroEjeX" almacenamos una lista de valores para el eje x de un gráfico centrado en cada barra
+#esto con el fin de graficar un diagrama de líneas en lugar de un diagrama de barras
+CentroEjeX = [i + 0.5 for i in range(len(EjeX))]
+
+#Con "ax.plot" creamos un diagrama de líneas
+ax.plot(CentroEjeX, EjeY, color='red', linestyle='-')
+
+#En la variable "EtiquetaEjeX" almacenamos los valores que queremos en el eje x
+EtiquetaEjeX=['2013','2014','2015','2016','2017','2018','2019','2020','2021','2022']
+
+#El siguiente comando nos permite establecer el número de elementos que tendrá el eje x, que será en este caso
+#el número de elementos en la variable "EtiquetaEjeX" y a continuación establecemos los valores del eje x
+#como los valores de la variable anterior
+ax.set_xticks(range(len(EtiquetaEjeX)))
+ax.set_xticklabels(EtiquetaEjeX)
+
+#Asignamos nombres a los ejes y un título al gráfico
+ax.set_xlabel('Año')
+ax.set_ylabel('Precio (USD)')
+ax.set_title('Precio del Petróleo')
+
+#Mostramos el gráfico del Precio del Petróleo
+plt.show()
